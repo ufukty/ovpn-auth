@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Copyright 2021 Ufuktan Yıldırım (ufukty)
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 # http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -47,8 +47,14 @@ password_clear=""
 password_salt="$(head -n 1024 /dev/urandom | sha512sum | cut -b 1-32)"
 password_hash_computed=""
 otp_secret="$(head -n 100 /dev/urandom | base32 | cut -b 1-32 | head -n 1)"
+otp_qr_temp_file_name="otp-qr-965e6df2-46b1-54fc-85ad-c84239d684d4.png"
 
-log_inf "Checking if argon2 is available..."
+log_inf "Checking if qr command is available..."
+if [[ ! $(which qr) ]]; then
+    log_ntc "qr command is not available. To produce QR code for your Authenticator app you can install it with: pip install qrcode"
+fi
+
+log_inf "Checking if argon2 command is available..."
 if [[ ! $(which argon2) ]]; then
     log_err "argon2 is not available in \$PATH, follow instructions https://github.com/P-H-C/phc-winner-argon2"
     exit 2
@@ -69,41 +75,36 @@ done
 
 log_inf "Running argon2, it can take couple minutes..."
 
-password_hash_computed="$(echo -n "$password_clear" | argon2 "$password_salt" -id -t 100 -m 17 -p 2 -e)"
+password_hash_computed="$(echo -n "$password_clear" | argon2 "$password_salt" -id -t 4 -m 15 -p 2 -e)"
 
 # FIXME: is it necessary?
 unset password_clear
 
 cat >secrets.yml <<HERE
 username: $username
-salt: $password_salt
 hash: $password_hash_computed
 otp_secret: $otp_secret
 HERE
 
 log_inf "secret.yml is created"
 
-if [[ "$EUID" > 0 && -d /etc/openvpn/ ]]; then
-    log_inf "Script is running by root user and '/etc/openvpn' does exists.
-    So, script will adjust permission and ownership of file and move it to /etc/openvpn behalf of you..."
-    chmod 400 "secrets.yml"
-    chown root:root "secrets.yml"
-    mv "secrets.yml" "/etc/openvpn/secrets.yml"
-else
-    log_ntc "Script isn't running as root or /etc/openvpn doesn't exists."
-    log_ntc "So, you have to adjust A) permission to 400, B) ownership to root, C) move the file into /etc/openvpn/secrets.yml"
-fi
-
 echo "Region information will be embedded into the Authenticator string."
 read -p "> Type the region (eg. aws-fra): " issuer_name
 
 log_inf "Open this link with internet browser in your phone, then it should redirect you to Authenticator app:"
-echo "otpauth://totp/OpenVPN:${username}@${issuer_name}?secret=${otp_secret}&issuer=OpenVPN"
+otp_string="otpauth://totp/OpenVPN:${username}@${issuer_name}?secret=${otp_secret}&issuer=OpenVPN"
+echo "$otp_string"
+if [[ $(which qr) ]]; then
+    qr "$otp_string" >"$otp_qr_temp_file_name"
+    open "$otp_qr_temp_file_name"
+fi
 
 while [[ "1" ]]; do
     read -p "> Type the OTP code produced by the authenticator: " input_otp_nonce
     computed_nonce="$(oathtool --totp --base32 "$otp_secret")"
     if [[ "$input_otp_nonce" =~ ^${computed_nonce}$ ]]; then break; fi
 done
+
+if [[ -e "$otp_qr_temp_file_name" ]]; then rm "$otp_qr_temp_file_name"; fi
 
 log_suc "Script should be finished succesfully."
