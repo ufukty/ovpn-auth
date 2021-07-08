@@ -26,10 +26,10 @@ If you find the project doesn't meet any of those requirements, create an issue 
 -   **Argon2 (libargon2)**
 
     ```sh
-    wget https://github.com/P-H-C/phc-winner-argon2/archive/refs/tags/20190702.tar.gz
-    tar -xvf 20190702.tar.gz
-    cd phc-winner-argon2-20190702
-    sudo make install
+    $ wget https://github.com/P-H-C/phc-winner-argon2/archive/refs/tags/20190702.tar.gz
+    $ tar -xvf 20190702.tar.gz
+    $ cd phc-winner-argon2-20190702
+    $ sudo make install
     ```
 
 ### Requirements for using setup_assistance.sh
@@ -38,13 +38,13 @@ If you find the project doesn't meet any of those requirements, create an issue 
 
     ```sh
     # ubuntu
-    apt install oathtool
+    $ apt install oathtool
     # macos
-    brew install oath-toolkit
+    $ brew install oath-toolkit
     # centos
-    yum install oathtool
+    $ yum install oathtool
     # fedora
-    dnf install oathtool
+    $ dnf install oathtool
     ```
 
 -   **qr**
@@ -52,7 +52,7 @@ If you find the project doesn't meet any of those requirements, create an issue 
     Optional. Install this only if you want to get the qr code of the Authenticator link and have a monitor connected to the system that runs the script.
 
     ```sh
-    pip install qrcode
+    $ pip install qrcode
     ```
 
 ### [IMPORTANT] Further requirements:
@@ -86,7 +86,7 @@ $ tar -xzf ovpn-auth-210707-linux-amd64.tar.gz
 $ mv ovpn-auth-210707-linux-amd64.tar.gz /etc/openvpn/ovpn-auth
 
 # macos-amd64
-wget https://github.com/ufukty/ovpn-auth/releases/download/v0.1-test/ovpn-auth-210707-darwin-amd64.tar.gz
+$ wget https://github.com/ufukty/ovpn-auth/releases/download/v0.1-test/ovpn-auth-210707-darwin-amd64.tar.gz
 $ tar -xzf ovpn-auth-210707-darwin-amd64.tar.gz
 $ mv ovpn-auth-210707-darwin-amd64.tar.gz /etc/openvpn/ovpn-auth
 ```
