@@ -81,14 +81,14 @@ $ scp secrets.yml server:/etc/openvpn/secrets.yml
 
 ```sh
 # linux-amd64
-$ wget https://github.com/ufukty/ovpn-auth/releases/download/v0.1-test/ovpn-auth-210707-linux-amd64.tar.gz
-$ tar -xzf ovpn-auth-210707-linux-amd64.tar.gz
-$ mv ovpn-auth-210707-linux-amd64.tar.gz /etc/openvpn/ovpn-auth
+$ wget https://github.com/ufukty/ovpn-auth/releases/download/v0.2-test/ovpn-auth-210813-linux-amd64.tar.gz
+$ tar -xzf ovpn-auth-210813-linux-amd64.tar.gz
+$ mv ovpn-auth-210813-linux-amd64.tar.gz /etc/openvpn/ovpn-auth
 
 # macos-amd64
-$ wget https://github.com/ufukty/ovpn-auth/releases/download/v0.1-test/ovpn-auth-210707-darwin-amd64.tar.gz
-$ tar -xzf ovpn-auth-210707-darwin-amd64.tar.gz
-$ mv ovpn-auth-210707-darwin-amd64.tar.gz /etc/openvpn/ovpn-auth
+$ wget https://github.com/ufukty/ovpn-auth/releases/download/v0.2-test/ovpn-auth-210813-darwin-amd64.tar.gz
+$ tar -xzf ovpn-auth-210813-darwin-amd64.tar.gz
+$ mv ovpn-auth-210813-darwin-amd64.tar.gz /etc/openvpn/ovpn-auth
 ```
 
 ### Configure server
