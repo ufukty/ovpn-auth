@@ -15,20 +15,16 @@
 package main
 
 import (
+	"main/file"
+	"main/validate"
 	"os"
 )
 
 func main() {
-	userInput := loadUserInput(os.Args[1])
-	storedSecrets := loadSecrets("secrets.yml")
+	userInput := file.LoadUserInput(os.Args[1])
+	storedSecrets := file.LoadSecrets("secrets.yml")
 
-	// Perform both OTP and Password checks before sending the response.
-	// It is a measure against timing-attack.
-	valid_usn := validateUsername(storedSecrets.Username, userInput.Username)
-	valid_otp := validateOTP(storedSecrets.Otp_secret, userInput.Otp_nonce)
-	valid_pwd := validatePassword(storedSecrets.Hash, storedSecrets.Salt, userInput.Password)
-
-	if valid_usn && valid_otp && valid_pwd {
+	if validate.Final(storedSecrets, userInput) {
 		os.Exit(0)
 	} else {
 		os.Exit(1)

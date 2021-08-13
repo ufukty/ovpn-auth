@@ -12,18 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package file
 
 import (
 	"bufio"
 	"log"
 	"os"
-	"strings"
 
 	"gopkg.in/yaml.v3"
 )
 
-func loadSecrets(filename string) StoredSecrets {
+type StoredSecrets struct {
+	Username   string
+	Hash       string
+	Otp_secret string
+}
+
+type UserInput struct {
+	Username  string
+	Password  string
+	Otp_nonce string
+}
+
+func LoadSecrets(filename string) StoredSecrets {
 	content, err := os.ReadFile(filename)
 	if err != nil {
 		log.Fatal(err)
@@ -39,7 +50,7 @@ func loadSecrets(filename string) StoredSecrets {
 	return secrets
 }
 
-func loadUserInput(filename string) UserInput {
+func LoadUserInput(filename string) UserInput {
 	file, err := os.Open(filename)
 	if err != nil {
 		log.Fatal(err)
@@ -54,7 +65,7 @@ func loadUserInput(filename string) UserInput {
 
 	return UserInput{
 		Username:  lines[0],
-		Password:  strings.Split(lines[1], ":")[0],
-		Otp_nonce: strings.Split(lines[1], ":")[1],
+		Password:  lines[1][:len(lines[1])-6],
+		Otp_nonce: lines[1][len(lines[1])-6:],
 	}
 }

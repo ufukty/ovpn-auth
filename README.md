@@ -184,6 +184,24 @@ go build .
 file main
 ```
 
+## Test results against timing attacks
+
+Tests are performed in various scenerios and compares average of 50 iterations for both invalid and valid inputs that might come from user/attacker.
+
+| Scenario         | Difference of averages (%) | Difference of averages (ms) | Difference of standart deviations (%) |
+| ---------------- | -------------------------- | --------------------------- | ------------------------------------- |
+| Invalid username | 3.20 %                     | 0.92 ms                     | 11.28 %                               |
+| Empty password   | 99.99 %                    | 23.34 ms                    | 99.99 %                               |
+| Invalid password | 0.95 %                     | 0.27 ms                     | 7.59 %                                |
+
+\* In all tests, desired result is `0ms` or `0%`. Results may vary between runs, depends on CPU load coming from other applications runinng on computer.
+
+You can run those tests in your computer with this command:
+
+```sh
+go test -v main/validate/...
+```
+
 ## Contribution
 
 Issues and PRs are welcome.
@@ -199,4 +217,3 @@ Issues and PRs are welcome.
 ## License
 
 Apache 2.0 License. Read the LICENSE file for information.
-
