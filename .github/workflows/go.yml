@@ -1,0 +1,29 @@
+name: Go
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.16
+
+    - name: Install argon2
+      run: |
+        wget https://github.com/P-H-C/phc-winner-argon2/archive/refs/tags/20190702.tar.gz
+        tar -xvf 20190702.tar.gz
+        cd phc-winner-argon2-20190702
+        sudo make install
+
+    - name: Build
+      run: go build -v ./...
