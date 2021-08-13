@@ -12,33 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package validate
 
 import (
 	"log"
+	"main/file"
 
 	"github.com/pquerna/otp/totp"
 	"github.com/tvdburgt/go-argon2"
 )
 
-type StoredSecrets struct {
-	Username   string
-	Salt       string
-	Hash       string
-	Otp_secret string
-}
-
-type UserInput struct {
-	Username  string
-	Password  string
-	Otp_nonce string
-}
-
-func validateUsername(storedUsername string, inputUsername string) bool {
+func Username(storedUsername string, inputUsername string) bool {
 	return storedUsername == inputUsername
 }
 
-func validatePassword(storedHash string, storedSalt string, inputPassword string) bool {
+func Password(storedHash string, inputPassword string) bool {
+	if inputPassword == "" {
+		return false
+	}
 	result, err := argon2.VerifyEncoded(storedHash, []byte(inputPassword))
 	if err != nil {
 		log.Fatal(err)
@@ -46,6 +37,20 @@ func validatePassword(storedHash string, storedSalt string, inputPassword string
 	return result
 }
 
-func validateOTP(storedOtpSecret string, inputOtpNonce string) bool {
+func OTP(storedOtpSecret string, inputOtpNonce string) bool {
 	return totp.Validate(inputOtpNonce, storedOtpSecret)
+}
+
+func Final(storedSecrets file.StoredSecrets, userInput file.UserInput) bool {
+	// Perform both OTP and Password checks before sending the response.
+	// It is a measure against timing-attack.
+	valid_usn := Username(storedSecrets.Username, userInput.Username)
+	valid_otp := OTP(storedSecrets.Otp_secret, userInput.Otp_nonce)
+	valid_pwd := Password(storedSecrets.Hash, userInput.Password)
+
+	if valid_usn && valid_otp && valid_pwd {
+		return true
+	} else {
+		return false
+	}
 }
