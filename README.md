@@ -165,7 +165,8 @@ sudo tar -C /usr/local -xzf go1.16.5.linux-amd64.tar.gz
 rm go1.16.5.linux-amd64.tar.gz
 
 # Add .../go/bin to PATH environment variable
-echo "export PATH=\"\$PATH:/usr/local/go/bin\"" >>.bash_profile
+echo "export PATH=\"\$PATH:/usr/local/go/bin\"" >>~/.bash_profile
+source ~/.bash_profile
 
 # Create GO path in your home folder
 mkdir -p go/{bin,pkg,src}
