@@ -120,14 +120,14 @@ $ echo "auth-user-pass" >>/path/to/client_config.ovpn
 
 ## Login
 
-Enter your password and TOTP code with a colon (:) between them when OpenVPN asks. Don't use colon in your password.
+Enter your password and TOTP code without any character between them when OpenVPN asks. Last 6 digit should be the TOTP code
 
 ```sh
 $ sudo openvpn client_config.ovpn
 ...
 ...
 Enter Auth Username:<username>
-Enter Auth Password:<password>:<totp>
+Enter Auth Password:<password><totp>
 ...
 ...
 ```
