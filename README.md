@@ -2,6 +2,8 @@
 
 # ovpn-auth
 
+# Hi, how can i add multiple users? and not only one? after i created first secrets.yml. i cant add more...
+
 ovpn-auth is a multi-factor authentication solution for OpenVPN that supports both password and time based one-time-pasword (otp, e.g. Google Authenticator) nonces. It stores passwords after processing them with the state-of-the-art key derivation function Argon2. It is written in Go and has a setup assistance shell script to start using quickly as possible.
 
 ## Caution
