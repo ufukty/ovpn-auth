@@ -1,14 +1,6 @@
-2021.07.03
-
 # ovpn-auth
 
 ovpn-auth is a multi-factor authentication solution for OpenVPN that supports both password and time based one-time-pasword (otp, e.g. Google Authenticator) nonces. It stores passwords after processing them with the state-of-the-art key derivation function Argon2. It is written in Go and has a setup assistance shell script to start using quickly as possible.
-
-## Caution
-
-> Solutions in this repository may not be safe or secure to use. Review it before use. Take your own risk. If you find an issue, create an issue in GitHub.
->
-> Software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the LICENSE file.
 
 ## Objectives of the project
 
@@ -18,48 +10,26 @@ If you find the project doesn't meet any of those requirements, create an issue 
 -   Prevent injection
 -   Similar time of completion for both valid & invalid requests (one of the possible measures against brute-force & timing attacks)
 
-## Usage requirements
+## Read before use
 
-### Requirements for using ovpn-auth
+-   Solutions in this repository may not be safe or secure to use. Review it before use. Take your own risk. If you find an issue, create an issue in GitHub.
 
--   **OpenVPN**
--   **Argon2 (libargon2)**
-
-    ```sh
-    $ wget https://github.com/P-H-C/phc-winner-argon2/archive/refs/tags/20190702.tar.gz
-    $ tar -xvf 20190702.tar.gz
-    $ cd phc-winner-argon2-20190702
-    $ sudo make install
-    ```
-
-### Requirements for using setup_assistance.sh
-
--   **oathtool**
-
-    ```sh
-    # ubuntu
-    $ apt install oathtool
-    # macos
-    $ brew install oath-toolkit
-    # centos
-    $ yum install oathtool
-    # fedora
-    $ dnf install oathtool
-    ```
-
--   **qr**
-
-    Optional. Install this only if you want to get the qr code of the Authenticator link and have a monitor connected to the system that runs the script.
-
-    ```sh
-    $ pip install qrcode
-    ```
-
-### [IMPORTANT] Further requirements:
+-   Software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the LICENSE file.
 
 -   Password derivation function takes 32 MiB of space in memory for each login request. So, adjust firewall in a way it will deny abusive amount of requests may originate by attackers from different IPs to take one of the measures against Denial-of-Service attacks.
 
 -   Since, OpenVPN daemon starts the `ovpn-auth` script as the user `nobody`, `secrets.yml` file should be accessible by `nobody`. That means username, password, and otp secret will be able to seen by anyone in the server. While it is not a big problem for argon2 hashes, you should mind the exposure of otp secret.
+
+## Dependencies
+
+Run `make install-dependencies-mac` or `make install-dependencies-linux` to get dependencies.
+
+-   Dependencies of ovpn-auth:
+    -   OpenVPN (not included in Makefile)
+    -   Argon2 (libargon2)
+-   Dependencies of setup assistance:
+    -   oathtool (brew/apt)
+    -   qr (pip)
 
 ## How to use
 

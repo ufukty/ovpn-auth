@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 )
 
 // internal use for tests
@@ -177,10 +177,10 @@ func Test_Final_TimingAttack_InvalidPassword(test *testing.T) {
 	compare_datasets_on_final_method(stored_secret_dataset, user_inputs_invalid, user_inputs_valid, test)
 }
 
-func Test_Final_TimingAttack_EmptyOTP(test *testing.T) {
-	test.Log("Test is not implemented yet.")
+func Test_Final_TimingAttack_EmptyOTP(t *testing.T) {
+	t.Fatal("Test is not implemented yet.")
 }
 
-func Test_Final_TimingAttack_InvalidOTP(test *testing.T) {
-	test.Log("Test is not implemented yet.")
+func Test_Final_TimingAttack_InvalidOTP(t *testing.T) {
+	t.Fatal("Test is not implemented yet.")
 }
