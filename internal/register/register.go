@@ -107,7 +107,7 @@ func WithInteraction() error {
 	if err != nil {
 		return fmt.Errorf("setting a totp secret: %w", err)
 	}
-	db, err := files.LoadDatabase()
+	db, err := files.LoadDefaultDatabase()
 	if err != nil {
 		return fmt.Errorf("loading database: %w", err)
 	}

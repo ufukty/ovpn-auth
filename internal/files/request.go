@@ -7,9 +7,9 @@ import (
 )
 
 type LoginRequest struct {
-	Username  Username
-	Password  string
-	TotpNonce string
+	Username  Username `yaml:"username"`
+	Password  string   `yaml:"password"`
+	TotpNonce string   `yaml:"totp-nonce"`
 }
 
 func ParseLoginRequest(filename string) (*LoginRequest, error) {

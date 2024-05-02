@@ -34,8 +34,8 @@ type DatabaseRecord struct {
 
 type Database map[Username]DatabaseRecord
 
-func LoadDatabase() (Database, error) {
-	fh, err := os.Open(dbpath)
+func LoadDatabase(path string) (Database, error) {
+	fh, err := os.Open(path)
 	if err != nil {
 		return nil, fmt.Errorf("opening database file: %w", err)
 	}
@@ -47,6 +47,10 @@ func LoadDatabase() (Database, error) {
 	}
 	db := utils.Mapify(dbrcs, func(dbrc DatabaseRecord) Username { return dbrc.Username })
 	return Database(db), nil
+}
+
+func LoadDefaultDatabase() (Database, error) {
+	return LoadDatabase(dbpath)
 }
 
 func fileExists(path string) bool {

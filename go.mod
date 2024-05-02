@@ -6,6 +6,7 @@ require (
 	github.com/alexedwards/argon2id v1.0.0
 	github.com/mdp/qrterminal/v3 v3.2.0
 	github.com/pquerna/otp v1.4.0
+	golang.org/x/exp v0.0.0-20240416160154-fe59bbe5cc7f
 	golang.org/x/term v0.19.0
 	gopkg.in/yaml.v3 v3.0.1
 )
