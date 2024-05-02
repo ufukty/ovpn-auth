@@ -1,4 +1,4 @@
-# ovpn-auth
+# `ovpn-auth`
 
 `ovpn-auth` is a easy-to-use multi-factor authentication solution for OpenVPN that supports both password and Time-Based OTP nonces.
 
@@ -6,10 +6,9 @@
 
 - 2FA login with username, password and TOTP nonce
 - Multiple users
-- Built-in mechanism to register. Scan QR code printed on terminal to TOTP app e.g. Google Authenticator.
-- No dependencies. Single binary. Easy to deploy & use.
-- Passwords are stored as Argon2id hashes (64MiB memory, 4 iterations, 2 parallelism)
-- Subtle care against timing attacks.
+- Built-in mechanism to register. Scan QR code printed on terminal to TOTP app e.g. Google Authenticator
+- No dependencies & single binary => easy to deploy & use
+- Passwords are stored as Argon2id hashes
 
 > [!CAUTION]
 > Solutions in this repository may not be safe or secure to use. Review it before use. Take your own risk. If you find an issue, report.
@@ -32,8 +31,8 @@
 $ cd /etc/openvpn
 
 # Adjust permissions and ownership
-$ chmod 744 secrets.yml
-$ chown root:root secrets.yml
+$ chmod 744 ovpn_auth_database.yml
+$ chown root:root ovpn_auth_database.yml
 # Caution: That means every user on the server will be able to read the content of secrets file.
 
 $ chmod 755 ovpn-auth
@@ -52,18 +51,23 @@ In the client configuration, make this update to enable username/password prompt
 $ echo "auth-user-pass" >>/path/to/client_config.ovpn
 ```
 
+## Register
+
+```sh
+ovpn-auth register
+```
+
+This will ask username, password and print a totp secret with QR code for it. It needs `/etc/openvpn` directory to exist.
+
 ## Login
 
-Enter your password and TOTP code without any character between them when OpenVPN asks. Last 6 digit should be the TOTP code
+Append 6 digit TOTP nonce just to the end of your password.
 
 ```sh
 $ sudo openvpn client_config.ovpn
 ...
-...
 Enter Auth Username:<username>
 Enter Auth Password:<password><totp>
-...
-...
 ```
 
 ## Security Measures
