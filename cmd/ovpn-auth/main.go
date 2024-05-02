@@ -23,6 +23,9 @@ import (
 )
 
 func dispatch() error {
+	if len(os.Args) < 2 {
+		return fmt.Errorf("not enough argument")
+	}
 	switch arg := os.Args[1]; arg {
 	case "register":
 		if err := register.WithInteraction(); err != nil {
