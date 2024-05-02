@@ -29,7 +29,6 @@ Godeps
 Icon
 Network Trash Folder
 Temporary Items
-vendor
 
 !.vscode/extensions.json
 !.vscode/launch.json
