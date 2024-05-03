@@ -15,10 +15,13 @@
 package files
 
 import (
+	"errors"
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/ufukty/ovpn-auth/internal/utils"
+	"golang.org/x/exp/maps"
 	"gopkg.in/yaml.v3"
 )
 
@@ -43,7 +46,11 @@ func LoadDatabase(path string) (Database, error) {
 	dbrcs := []DatabaseRecord{}
 	err = yaml.NewDecoder(fh).Decode(&dbrcs)
 	if err != nil {
-		return nil, fmt.Errorf("decoding database: %w", err)
+		if errors.Is(err, io.EOF) {
+			return Database{}, nil
+		} else {
+			return nil, fmt.Errorf("decoding database: %w", err)
+		}
 	}
 	db := utils.Mapify(dbrcs, func(dbrc DatabaseRecord) Username { return dbrc.Username })
 	return Database(db), nil
@@ -78,7 +85,7 @@ func (db Database) Save() error {
 	if err != nil {
 		return fmt.Errorf("opening database file: %w", err)
 	}
-	err = yaml.NewEncoder(fh).Encode(db)
+	err = yaml.NewEncoder(fh).Encode(maps.Values(db))
 	if err != nil {
 		return fmt.Errorf("writing to database file: %w", err)
 	}
