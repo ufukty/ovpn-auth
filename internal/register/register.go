@@ -60,7 +60,7 @@ func setTotpSecret(username string) (string, error) {
 	secret := key.String()
 
 	fmt.Println("Copy the secret or scan QR:", secret)
-	qrterminal.Generate(secret, qrterminal.H, os.Stdout)
+	qrterminal.Generate(secret, qrterminal.M, os.Stdout)
 
 	for {
 		scanner := bufio.NewScanner(os.Stdin)
