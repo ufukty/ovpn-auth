@@ -22,6 +22,8 @@ import (
 	"github.com/ufukty/ovpn-auth/internal/register"
 )
 
+var Version = ""
+
 func dispatch() error {
 	if len(os.Args) < 2 {
 		return fmt.Errorf("not enough argument")
@@ -31,6 +33,8 @@ func dispatch() error {
 		if err := register.WithInteraction(); err != nil {
 			return fmt.Errorf("performing registration interaction: %w", err)
 		}
+	case "version":
+		fmt.Println(Version)
 	default:
 		if err := login.WithFile(arg); err != nil {
 			return fmt.Errorf("checking login: %w", err)
