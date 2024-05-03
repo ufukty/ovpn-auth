@@ -75,8 +75,8 @@ Database file is portable. Just be sure it has correct permissions to let user `
 ```yml
 # /etc/openvpn/ovpn_auth_database.yml
 - username: ufukty
-  hash: $argon2id$v=19$m=13,t=2,p=1$fdxUDnZZ9kPXRUQF8Z3DP1OkwVOw1bWwEB4y/C3RrQ8$x2D/sH/7MlWMrz4Oc2FgMR5pqnw1ZbVSJY2oRpTc1bthOJtRLRAt9IRpV/XZaxSg/8q6ewnz2X2igtOy48uHkuFkRNmIIjpzAetmSa5cqKJWxT1iAA+XNfS54+WqvdjWY4uvi8jKwqaBJupsGWPjwMi/JGUip4mu2LtkQPDPQ5I
-  totp-secret: GCH35RULQC42SF2BGXCS2PZFY3KWN3XV
+  hash: $argon2id$v=19$m=65536,t=2,p=1$AQQSwAsd4DGijyj9IpTjDNJllW/owpE3C6toqtruBxs$ZDnWhrpxzB34GInI9cjAf18ddE0LaMFiPCZXbYBnUzPE7khDJLBvLgHh/P7k39j5RDwKhThwBZvyEx5hnmO43nOS694zB/w5N96zQm0MPmagVPJXCV519f1wAd0EgqxEsi77iGLptIw/FdriWuBfKpO+3ygG81tL7rJS6k6kcMQ
+  totp-secret: XJB7WISZEXY5SGTZZLL4D3OCHWDQFRDF
 ```
 
 ## Security
