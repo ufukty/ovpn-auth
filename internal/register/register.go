@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"slices"
+	"strings"
 
 	"github.com/alexedwards/argon2id"
 	"github.com/mdp/qrterminal/v3"
@@ -17,11 +18,20 @@ var unavailableUsernames = []files.Username{
 	"register",
 }
 
+func ask(prompt string) (string, error) {
+	fmt.Print(prompt)
+	reader := bufio.NewReader(os.Stdin)
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		return "", err
+	}
+	input = strings.TrimSuffix(input, "\n")
+	return input, nil
+}
+
 func askUsername() (files.Username, error) {
 	for {
-		fmt.Print("Enter username: ")
-		reader := bufio.NewReader(os.Stdin)
-		username, err := reader.ReadString('\n')
+		username, err := ask("Enter username: ")
 		if err != nil {
 			return "", fmt.Errorf("reading username: %w", err)
 		}
@@ -62,15 +72,11 @@ func setTotpSecret(username string) (string, error) {
 
 	secret := key.Secret()
 	for {
-		fmt.Print("> ")
-		reader := bufio.NewReader(os.Stdin)
-		nonce, err := reader.ReadString('\n')
+		nonce, err := ask("Enter TOTP nonce: ")
 		if err != nil {
-			return "", fmt.Errorf("reading username: %w", err)
+			return "", fmt.Errorf("reading totp nonce to validate: %w", err)
 		}
-		fmt.Printf("%q", nonce)
-		match := totp.Validate(nonce, secret)
-		if match {
+		if totp.Validate(nonce, secret) {
 			return secret, nil
 		}
 		fmt.Println("try again")
@@ -119,5 +125,6 @@ func WithInteraction() error {
 	if err != nil {
 		return fmt.Errorf("saving changes to database: %w", err)
 	}
+	fmt.Println("success")
 	return nil
 }
