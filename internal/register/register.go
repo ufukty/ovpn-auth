@@ -99,11 +99,11 @@ func WithInteraction() error {
 		return fmt.Errorf("asking password: %w", err)
 	}
 	hash, err := argon2id.CreateHash(pwd, &argon2id.Params{
-		Memory:      2 ^ 15, // 32 megabytes
-		Iterations:  4,
-		Parallelism: 2,
+		Memory:      64 * 1024, // 64 megabytes
+		Iterations:  2,
+		Parallelism: 1,
 		SaltLength:  32,
-		KeyLength:   32,
+		KeyLength:   128,
 	})
 	if err != nil {
 		return fmt.Errorf("hashing password: %w", err)
