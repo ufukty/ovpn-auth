@@ -71,7 +71,7 @@ func fileExists(path string) bool {
 
 func CheckDatabase() error {
 	if !fileExists(dbpath) {
-		fh, err := os.OpenFile(dbpath, os.O_CREATE|os.O_WRONLY, 0700)
+		fh, err := os.OpenFile(dbpath, os.O_CREATE|os.O_WRONLY, 0744)
 		if err != nil {
 			return fmt.Errorf("creating database file: %w", err)
 		}
