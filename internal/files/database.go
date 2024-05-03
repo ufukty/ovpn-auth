@@ -81,7 +81,7 @@ func CheckDatabase() error {
 }
 
 func (db Database) Save() error {
-	fh, err := os.OpenFile(dbpath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0700)
+	fh, err := os.OpenFile(dbpath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0744)
 	if err != nil {
 		return fmt.Errorf("opening database file: %w", err)
 	}
