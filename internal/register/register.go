@@ -19,11 +19,10 @@ var unavailableUsernames = []files.Username{
 
 func askUsername() (files.Username, error) {
 	for {
-		scanner := bufio.NewScanner(os.Stdin)
 		fmt.Print("Enter username: ")
-		scanner.Scan()
-		username := scanner.Text()
-		if err := scanner.Err(); err != nil {
+		reader := bufio.NewReader(os.Stdin)
+		username, err := reader.ReadString('\n')
+		if err != nil {
 			return "", fmt.Errorf("reading username: %w", err)
 		}
 		if username == "" {
@@ -57,19 +56,19 @@ func setTotpSecret(username string) (string, error) {
 		return "", fmt.Errorf("generating totp key: %w", err)
 	}
 
-	secret := key.String()
+	url := key.String()
+	fmt.Println("Copy the secret or scan QR:", url)
+	qrterminal.Generate(url, qrterminal.M, os.Stdout)
 
-	fmt.Println("Copy the secret or scan QR:", secret)
-	qrterminal.Generate(secret, qrterminal.M, os.Stdout)
-
+	secret := key.Secret()
 	for {
-		scanner := bufio.NewScanner(os.Stdin)
 		fmt.Print("> ")
-		scanner.Scan()
-		nonce := scanner.Text()
-		if err := scanner.Err(); err != nil {
+		reader := bufio.NewReader(os.Stdin)
+		nonce, err := reader.ReadString('\n')
+		if err != nil {
 			return "", fmt.Errorf("reading username: %w", err)
 		}
+		fmt.Printf("%q", nonce)
 		match := totp.Validate(nonce, secret)
 		if match {
 			return secret, nil
