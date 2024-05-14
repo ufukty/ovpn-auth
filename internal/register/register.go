@@ -16,6 +16,8 @@ import (
 
 var unavailableUsernames = []files.Username{
 	"register",
+	"validate",
+	"version",
 }
 
 func ask(prompt string) (string, error) {
