@@ -33,6 +33,10 @@ func dispatch() error {
 		if err := register.WithInteraction(); err != nil {
 			return fmt.Errorf("performing registration interaction: %w", err)
 		}
+	case "validate":
+		if err := login.WithInteraction(); err != nil {
+			return fmt.Errorf("performing login validation flow: %w", err)
+		}
 	case "version":
 		fmt.Println(Version)
 	default:
