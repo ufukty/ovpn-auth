@@ -7,6 +7,8 @@ import (
 
 func Test_InputParse(t *testing.T) {
 	tcs := map[string]*LoginRequest{
+		"testdata/empty.txt":         nil,
+		"testdata/newline.txt":       nil,
 		"testdata/no-totp.txt":       nil,
 		"testdata/only-pass.txt":     nil,
 		"testdata/only-username.txt": nil,
