@@ -6,20 +6,41 @@ import (
 )
 
 func Test_InputParse(t *testing.T) {
-	r, err := ParseLoginRequest("assets/example.txt")
-	if err != nil {
-		t.Fatal(fmt.Errorf("act: %w", err))
+	tcs := map[string]*LoginRequest{
+		"testdata/no-totp.txt":       nil,
+		"testdata/only-pass.txt":     nil,
+		"testdata/only-username.txt": nil,
+		"testdata/username-totp.txt": nil,
+		"testdata/valid.txt": {
+			Username:  "username",
+			Password:  "passwd",
+			TotpNonce: "123456",
+		},
+		"testdata/zhenyi2.txt": { // https://github.com/ufukty/ovpn-auth/issues/3
+			Username:  "zhenyi2",
+			Password:  "7758a",
+			TotpNonce: "303234",
+		},
 	}
 
-	if r.Username != "ufukty" {
-		t.Errorf("assert, username expected to be %q got %q", "ufukty", r.Username)
-	}
-
-	if r.Password != "Hello World!" {
-		t.Errorf("assert, password expected to be %q got %q", "Hello World!", r.Password)
-	}
-
-	if r.TotpNonce != "111111" {
-		t.Errorf("assert, totpNonce expected to be %q got %q", "111111", r.TotpNonce)
+	for path, expected := range tcs {
+		t.Run(path, func(t *testing.T) {
+			r, err := ParseLoginRequest(path)
+			if (expected == nil) && err == nil {
+				t.Fatal("expected to fail, but returned with success")
+			} else if (expected != nil) && (err != nil) {
+				t.Fatal(fmt.Printf("expected to succeed, but returned with an error: %s", err.Error()))
+			} else if expected != nil {
+				if expected.Username != r.Username {
+					t.Fatal(fmt.Errorf("assert Username, expected %q, got %q", expected.Username, r.Username))
+				}
+				if expected.Password != r.Password {
+					t.Fatal(fmt.Errorf("assert Password, expected %q, got %q", expected.Password, r.Password))
+				}
+				if expected.TotpNonce != r.TotpNonce {
+					t.Fatal(fmt.Errorf("assert TotpNonce, expected %q, got %q", expected.TotpNonce, r.TotpNonce))
+				}
+			}
+		})
 	}
 }
