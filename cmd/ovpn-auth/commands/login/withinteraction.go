@@ -2,6 +2,7 @@ package login
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"os"
 	"strings"
@@ -27,8 +28,16 @@ func ask(prompt string) (string, error) {
 	}
 }
 
+type Args struct {
+	Database string
+}
+
 func WithInteraction() error {
-	db, err := files.LoadDefaultDatabase()
+	args := &Args{}
+	flag.StringVar(&args.Database, "database", "/etc/openvpn/ovpn_auth_database.yml", "Relative or absolute path of Ovpn-Auth database that will be used for writing the credentials. If there is no file in given path, Ovpn-Auth will create a new database file.")
+	flag.Parse()
+
+	db, err := files.LoadDatabase(args.Database)
 	if err != nil {
 		return fmt.Errorf("loading database: %w", err)
 	}

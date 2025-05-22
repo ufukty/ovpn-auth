@@ -25,8 +25,6 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-const dbpath = "/etc/openvpn/ovpn_auth_database.yml"
-
 type Username string
 
 type DatabaseRecord struct {
@@ -56,10 +54,6 @@ func LoadDatabase(path string) (Database, error) {
 	return Database(db), nil
 }
 
-func LoadDefaultDatabase() (Database, error) {
-	return LoadDatabase(dbpath)
-}
-
 func fileExists(path string) bool {
 	if _, err := os.Stat(path); err != nil {
 		if os.IsNotExist(err) {
@@ -69,9 +63,9 @@ func fileExists(path string) bool {
 	return true
 }
 
-func CheckDatabase() error {
-	if !fileExists(dbpath) {
-		fh, err := os.OpenFile(dbpath, os.O_CREATE|os.O_WRONLY, 0744)
+func CheckDatabase(dst string) error {
+	if !fileExists(dst) {
+		fh, err := os.OpenFile(dst, os.O_CREATE|os.O_WRONLY, 0744)
 		if err != nil {
 			return fmt.Errorf("creating database file: %w", err)
 		}
@@ -80,8 +74,8 @@ func CheckDatabase() error {
 	return nil
 }
 
-func (db Database) Save() error {
-	fh, err := os.OpenFile(dbpath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0744)
+func (db Database) Save(dst string) error {
+	fh, err := os.OpenFile(dst, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0744)
 	if err != nil {
 		return fmt.Errorf("opening database file: %w", err)
 	}

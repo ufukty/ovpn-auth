@@ -65,7 +65,7 @@ func WithFile(path string) error {
 	if err != nil {
 		return fmt.Errorf("reading user input: %w", err)
 	}
-	db, err := files.LoadDefaultDatabase()
+	db, err := files.LoadDatabase("/etc/openvpn/ovpn_auth_database.yml")
 	if err != nil {
 		return fmt.Errorf("loading database: %w", err)
 	}
