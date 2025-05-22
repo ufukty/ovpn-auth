@@ -29,6 +29,7 @@ func dispatch() error {
 	}
 
 	first := os.Args[1]
+	os.Args = os.Args[1:]
 
 	commands := map[string]func() error{
 		"register": register.WithInteraction,
