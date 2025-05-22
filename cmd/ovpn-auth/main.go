@@ -18,31 +18,34 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/ufukty/ovpn-auth/cmd/ovpn-auth/commands/version"
 	"github.com/ufukty/ovpn-auth/internal/login"
 	"github.com/ufukty/ovpn-auth/internal/register"
 )
-
-var Version = ""
 
 func dispatch() error {
 	if len(os.Args) < 2 {
 		return fmt.Errorf("not enough argument")
 	}
-	switch arg := os.Args[1]; arg {
-	case "register":
-		if err := register.WithInteraction(); err != nil {
-			return fmt.Errorf("performing registration interaction: %w", err)
-		}
-	case "validate":
-		if err := login.WithInteraction(); err != nil {
-			return fmt.Errorf("performing login validation flow: %w", err)
-		}
-	case "version":
-		fmt.Println(Version)
-	default:
-		if err := login.WithFile(arg); err != nil {
+
+	first := os.Args[1]
+
+	commands := map[string]func() error{
+		"register": register.WithInteraction,
+		"validate": login.WithInteraction,
+		"version":  version.Run,
+	}
+
+	command, ok := commands[first]
+	if !ok {
+		if err := login.WithFile(first); err != nil {
 			return fmt.Errorf("checking login: %w", err)
 		}
+		return nil
+	}
+
+	if err := command(); err != nil {
+		return fmt.Errorf("%s: %w", first, err)
 	}
 
 	return nil
