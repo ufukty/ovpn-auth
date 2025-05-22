@@ -18,9 +18,9 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/ufukty/ovpn-auth/cmd/ovpn-auth/commands/login"
+	"github.com/ufukty/ovpn-auth/cmd/ovpn-auth/commands/register"
 	"github.com/ufukty/ovpn-auth/cmd/ovpn-auth/commands/version"
-	"github.com/ufukty/ovpn-auth/internal/login"
-	"github.com/ufukty/ovpn-auth/internal/register"
 )
 
 func dispatch() error {
