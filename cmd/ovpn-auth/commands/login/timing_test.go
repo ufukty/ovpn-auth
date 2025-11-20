@@ -10,6 +10,7 @@ import (
 	"github.com/ufukty/ovpn-auth/internal/utils"
 )
 
+// TODO: add deterministic assertions
 func TestTimings(t *testing.T) {
 	tcs := map[string][]time.Duration{
 		"invalid-totp.yml":          {},
