@@ -21,15 +21,13 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ hashFiles('backend/go.sum') }}
+          key: ${{ runner.os }}-go-${{ hashFiles('go.sum') }}
           restore-keys: ${{ runner.os }}-go-
 
       - name: go fmt
-        working-directory: backend
         run: go fmt ./...
 
       - name: get dependencies
-        working-directory: backend
         run: go mod download
 
       - name: Install golangci-lint
@@ -38,9 +36,7 @@ jobs:
             sh -s -- -b "$(go env GOPATH)"/bin v1.58.0
 
       - name: golangci-lint
-        working-directory: backend
         run: golangci-lint run --timeout 5m ./...
 
       - name: run tests
-        working-directory: backend
         run: go test ./...
