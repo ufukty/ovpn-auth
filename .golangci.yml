@@ -1,0 +1,4 @@
+version: 2
+linters:
+  disable:
+    - errcheck # see https://github.com/kisielk/errcheck/issues/101#issuecomment-3557222701

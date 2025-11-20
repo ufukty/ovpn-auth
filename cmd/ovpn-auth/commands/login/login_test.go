@@ -15,7 +15,7 @@ func loadTestRequestsFile(path string) ([]files.LoginRequest, error) {
 	if err != nil {
 		return nil, fmt.Errorf("opening file: %w", err)
 	}
-	defer fh.Close() //nolint:errcheck
+	defer fh.Close()
 	c := []files.LoginRequest{}
 	err = yaml.NewDecoder(fh).Decode(&c)
 	if err != nil {

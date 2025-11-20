@@ -40,7 +40,7 @@ func LoadDatabase(path string) (Database, error) {
 	if err != nil {
 		return nil, fmt.Errorf("opening database file: %w", err)
 	}
-	defer fh.Close() //nolint:errcheck
+	defer fh.Close()
 	dbrcs := []DatabaseRecord{}
 	err = yaml.NewDecoder(fh).Decode(&dbrcs)
 	if err != nil {
@@ -69,7 +69,7 @@ func CheckDatabase(dst string) error {
 		if err != nil {
 			return fmt.Errorf("creating database file: %w", err)
 		}
-		fh.Close() //nolint:errcheck
+		fh.Close()
 	}
 	return nil
 }
@@ -79,7 +79,7 @@ func (db Database) Save(dst string) error {
 	if err != nil {
 		return fmt.Errorf("opening database file: %w", err)
 	}
-	defer fh.Close() //nolint:errcheck
+	defer fh.Close()
 	err = yaml.NewEncoder(fh).Encode(maps.Values(db))
 	if err != nil {
 		return fmt.Errorf("writing to database file: %w", err)
