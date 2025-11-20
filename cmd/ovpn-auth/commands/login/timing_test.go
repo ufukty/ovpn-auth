@@ -10,11 +10,12 @@ import (
 	"github.com/ufukty/ovpn-auth/internal/utils"
 )
 
+// TODO: add deterministic assertions
 func TestTimings(t *testing.T) {
 	tcs := map[string][]time.Duration{
-		"invalid-totp.yml":          nil,
-		"invalid-username.yml":      nil,
-		"invalid-password-totp.yml": nil,
+		"invalid-totp.yml":          {},
+		"invalid-username.yml":      {},
+		"invalid-password-totp.yml": {},
 	}
 
 	db, err := files.LoadDatabase("testdata/database.yml")
@@ -28,10 +29,11 @@ func TestTimings(t *testing.T) {
 			if err != nil {
 				t.Fatal(fmt.Errorf("loading test requests file %q: %w", tn, err))
 			}
-			tcs[tn] = []time.Duration{}
 			for _, rq := range rqs {
 				start := time.Now()
-				login(db, &rq)
+				if err := login(db, &rq); err == nil {
+					t.Fatal("act, login, expected error")
+				}
 				tcs[tn] = append(tcs[tn], time.Since(start))
 			}
 		})
