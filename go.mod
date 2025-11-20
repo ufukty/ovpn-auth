@@ -1,7 +1,6 @@
 module github.com/ufukty/ovpn-auth
 
-go 1.22
-toolchain go1.24.1
+go 1.25
 
 require (
 	github.com/alexedwards/argon2id v1.0.0
