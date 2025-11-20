@@ -69,7 +69,7 @@ func CheckDatabase(dst string) error {
 		if err != nil {
 			return fmt.Errorf("creating database file: %w", err)
 		}
-		fh.Close()
+		fh.Close() //nolint:errcheck
 	}
 	return nil
 }
