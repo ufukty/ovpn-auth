@@ -40,7 +40,7 @@ func LoadDatabase(path string) (Database, error) {
 	if err != nil {
 		return nil, fmt.Errorf("opening database file: %w", err)
 	}
-	defer fh.Close()
+	defer fh.Close() //nolint:errcheck
 	dbrcs := []DatabaseRecord{}
 	err = yaml.NewDecoder(fh).Decode(&dbrcs)
 	if err != nil {
