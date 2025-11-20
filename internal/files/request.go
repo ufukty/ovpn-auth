@@ -17,7 +17,7 @@ func ParseLoginRequest(filename string) (*LoginRequest, error) {
 	if err != nil {
 		return nil, fmt.Errorf("reading user input file: %w", err)
 	}
-	defer fh.Close()
+	defer fh.Close() //nolint:errcheck
 
 	var lines []string
 	scanner := bufio.NewScanner(fh)

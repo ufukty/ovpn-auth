@@ -79,7 +79,7 @@ func (db Database) Save(dst string) error {
 	if err != nil {
 		return fmt.Errorf("opening database file: %w", err)
 	}
-	defer fh.Close()
+	defer fh.Close() //nolint:errcheck
 	err = yaml.NewEncoder(fh).Encode(maps.Values(db))
 	if err != nil {
 		return fmt.Errorf("writing to database file: %w", err)
