@@ -6,8 +6,14 @@ on:
   workflow_dispatch:
   schedule: [cron: "26 4 * * *"]
 
+concurrency:
+  group: codeql-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: read-all
+
 jobs:
-  go:
+  Go:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
