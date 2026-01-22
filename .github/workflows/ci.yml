@@ -20,6 +20,7 @@ jobs:
         with: { go-version-file: go.mod, cache: true }
       - run: go fmt ./...
       - run: go mod download
+      - run: go mod verify
       - run: go mod tidy; git diff --exit-code go.mod go.sum
       - uses: golangci/golangci-lint-action@v9
       - run: go test -race -v ./...
