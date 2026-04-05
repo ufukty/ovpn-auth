@@ -1,6 +1,6 @@
-# `ovpn-auth`
+# Ovpn-Auth
 
-`ovpn-auth` is a easy-to-use multi-factor authentication solution for OpenVPN that supports both password and Time-Based OTP nonces.
+Ovpn-Auth is a easy-to-use multi-factor authentication solution for OpenVPN that supports both password and Time-Based OTP nonces.
 
 ## Features
 
@@ -38,6 +38,24 @@ Enter Auth Password:<password><totp>
 ```
 
 ## How to use
+
+### Install
+
+Running or sharing don't, but building Ovpn-Auth from source does require Go compiler.
+
+Download, compile and install latest release of Ovpn-Auth:
+
+```sh
+go install go.ufukty.com/ovpn-auth@latest
+```
+
+Run Ovpn-Auth to validate installation:
+
+```sh
+ovpn-auth version
+```
+
+If shell reports it can't find the command then check your `PATH` contain `GOBIN` and `GOPATH` or use a familiar `GOBIN` with the install command.
 
 ### Configure server
 
