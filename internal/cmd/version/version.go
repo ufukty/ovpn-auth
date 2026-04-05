@@ -1,10 +1,16 @@
 package version
 
-import "fmt"
+import (
+	"fmt"
 
-var Version = ""
+	"github.com/ufukty/ovpn-auth/internal/version"
+)
 
 func Run() error {
-	fmt.Println(Version)
+	v, err := version.OfBuild()
+	if err != nil {
+		return fmt.Errorf("digging build details: %w", err)
+	}
+	fmt.Println(v)
 	return nil
 }
