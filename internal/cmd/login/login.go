@@ -19,7 +19,7 @@ import (
 
 	"github.com/alexedwards/argon2id"
 	"github.com/pquerna/otp/totp"
-	"github.com/ufukty/ovpn-auth/internal/files"
+	"go.ufukty.com/ovpn-auth/internal/files"
 )
 
 func login(users files.Database, r *files.LoginRequest) (err error) {

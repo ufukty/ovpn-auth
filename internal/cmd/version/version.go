@@ -3,7 +3,7 @@ package version
 import (
 	"fmt"
 
-	"github.com/ufukty/ovpn-auth/internal/version"
+	"go.ufukty.com/ovpn-auth/internal/version"
 )
 
 func Run() error {

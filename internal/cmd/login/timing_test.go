@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ufukty/ovpn-auth/internal/files"
-	"github.com/ufukty/ovpn-auth/internal/utils"
+	"go.ufukty.com/ovpn-auth/internal/files"
+	"go.ufukty.com/ovpn-auth/internal/utils"
 )
 
 // TODO: add deterministic assertions

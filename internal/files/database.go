@@ -20,7 +20,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/ufukty/ovpn-auth/internal/utils"
+	"go.ufukty.com/ovpn-auth/internal/utils"
 	"golang.org/x/exp/maps"
 	"gopkg.in/yaml.v3"
 )
@@ -65,7 +65,7 @@ func fileExists(path string) bool {
 
 func CheckDatabase(dst string) error {
 	if !fileExists(dst) {
-		fh, err := os.OpenFile(dst, os.O_CREATE|os.O_WRONLY, 0744)
+		fh, err := os.OpenFile(dst, os.O_CREATE|os.O_WRONLY, 0o744)
 		if err != nil {
 			return fmt.Errorf("creating database file: %w", err)
 		}
@@ -75,7 +75,7 @@ func CheckDatabase(dst string) error {
 }
 
 func (db Database) Save(dst string) error {
-	fh, err := os.OpenFile(dst, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0744)
+	fh, err := os.OpenFile(dst, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o744)
 	if err != nil {
 		return fmt.Errorf("opening database file: %w", err)
 	}

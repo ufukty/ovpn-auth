@@ -11,7 +11,7 @@ import (
 	"github.com/alexedwards/argon2id"
 	"github.com/mdp/qrterminal/v3"
 	"github.com/pquerna/otp/totp"
-	"github.com/ufukty/ovpn-auth/internal/files"
+	"go.ufukty.com/ovpn-auth/internal/files"
 	"golang.org/x/term"
 )
 
