@@ -1,6 +1,6 @@
-# `ovpn-auth`
+# Ovpn-Auth
 
-`ovpn-auth` is a easy-to-use multi-factor authentication solution for OpenVPN that supports both password and Time-Based OTP nonces.
+Ovpn-Auth is a easy-to-use multi-factor authentication solution for OpenVPN that supports both password and Time-Based OTP nonces.
 
 ## Features
 
@@ -38,6 +38,24 @@ Enter Auth Password:<password><totp>
 ```
 
 ## How to use
+
+### Install
+
+Running or sharing don't, but building Ovpn-Auth from source does require Go compiler.
+
+Download, compile and install latest release of Ovpn-Auth:
+
+```sh
+go install go.ufukty.com/ovpn-auth@latest
+```
+
+Run Ovpn-Auth to validate installation:
+
+```sh
+ovpn-auth version
+```
+
+If shell reports it can't find the command then check your `PATH` contain `GOBIN` and `GOPATH` or use a familiar `GOBIN` with the install command.
 
 ### Configure server
 
@@ -98,7 +116,7 @@ Database file is portable. Just be sure it has correct permissions to let user `
 ### Timing attacks
 
 ```sh
-$ /usr/local/go/bin/go test -timeout 10s -run ^TestTimings$ github.com/ufukty/ovpn-auth/internal/login -v -count=1
+$ /usr/local/go/bin/go test -timeout 10s -run ^TestTimings$ go.ufukty.com/ovpn-auth/internal/login -v -count=1
 
 === RUN   TestTimings
 === RUN   TestTimings/invalid-totp.yml
@@ -121,7 +139,7 @@ standard deviations (amongst all requests in one set, individually):
     --- PASS: TestTimings/invalid-username.yml (0.00s)
     --- PASS: TestTimings/invalid-password-totp.yml (0.00s)
 PASS
-ok      github.com/ufukty/ovpn-auth/internal/login      3.678s
+ok      go.ufukty.com/ovpn-auth/internal/login      3.678s
 ```
 
 ## Contribution

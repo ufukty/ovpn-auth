@@ -1,4 +1,4 @@
-module github.com/ufukty/ovpn-auth
+module go.ufukty.com/ovpn-auth
 
 go 1.25
 

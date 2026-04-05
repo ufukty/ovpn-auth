@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/ufukty/ovpn-auth/internal/files"
+	"go.ufukty.com/ovpn-auth/internal/files"
 	"gopkg.in/yaml.v3"
 )
 
