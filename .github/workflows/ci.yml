@@ -24,3 +24,12 @@ jobs:
       - run: go mod tidy; git diff --exit-code go.mod go.sum
       - uses: golangci/golangci-lint-action@1e7e51e771db61008b38414a730f564565cf7c20 # v9
       - run: go test -race -v ./...
+
+  Govulncheck:
+    runs-on: ubuntu-latest
+    permissions: { security-events: write }
+    steps:
+      - uses: golang/govulncheck-action@31f7c5463448f83528bd771c2d978d940080c9fd # latest-unversioned
+        with: { output-format: sarif, output-file: govulncheck.sarif }
+      - uses: github/codeql-action/upload-sarif@7434149006143a4d75b82a2f411ef15b03ccc2d7 # v4.35.1
+        with: { sarif_file: govulncheck.sarif }
